@@ -1,0 +1,67 @@
+//<HEADER>=================================
+
+//<MENU>=======================================
+
+//</MENU>=======================================
+
+//<BURGER>=======================================
+.icon-menu {
+	display: none;
+	@media (max-width: $mobile) {
+		display: block;
+		position: relative;
+		width: 30px;
+		height: 18px;
+		top: 0px;
+		left: 0px;
+		cursor: pointer;
+		z-index: 5;
+		margin: 0px 0px 0px 10px;
+		pointer-events: auto;
+		transition: opacity 0.3s ease 0s;
+		span {
+			pointer-events: none;
+			position: absolute;
+			width: 100%;
+			height: 2px;
+			top: calc(50% - 1px);
+			left: 0;
+			background-color: #000;
+			border-radius: 1px;
+			transition: all 0.3s ease 0s;
+			&:first-child {
+				top: 0;
+			}
+			&:last-child {
+				top: auto;
+				bottom: 0px;
+			}
+		}
+		// .icon-menu._active
+		.menu-open & {
+			span {
+				background-color: #fff;
+				transform: scale(0);
+				&:first-child {
+					transform: rotate(-45deg);
+					top: calc(50% - 1px);
+				}
+				&:last-child {
+					transform: rotate(45deg);
+					bottom: calc(50% - 1px);
+				}
+			}
+		}
+		@media (any-hover: hover) {
+			&:hover {
+				span {
+					box-shadow: 0 0 5px #fff;
+					background-color: $hoverCololr;
+				}
+			}
+		}
+	}
+}
+//</BURGER>=================================
+
+//</HEADER>=================================

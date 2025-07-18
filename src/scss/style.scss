@@ -1,0 +1,198 @@
+// <IMPORT>=================================
+@use "sass:math"; //модуль Math
+// Подключение главного файла миксина в глобальную область видимости
+//<MIXINS>=================================
+@import "base/mixins";
+//</MIXINS>=================================
+
+// <ШРИФТ>=================================
+//&display=swap - добавить при подключении через плагин
+// @import url(https://fonts.googleapis.com/css?family=Montserrat:300,400,600,700&display=swap);
+// @import "fonts/fonts"; // Подключить если есть локальные файлы шрифтов
+// @import "fonts/icons"; // Подключить если есть файл иконочного шрифта
+// </ШРИФТ></IMPORT>=================================
+
+// <VARIABLES>=================================
+$fontFamily: "PlusJakartaSans";
+$fontSize: rem(16); // где 14(px) - размер шрифта по умолчанию из макета
+// Основные цвета
+$blueColor: #4475f2;
+$mainColor: #5e6282;
+$lightGrayColor: #9a9ea6;
+$lightBlueColor: #23a6f0;
+$darkBlueColor: #181e4b;
+$hoverCololr: #4737ff;
+$mainBgColor: #fafafa; //приглушить цвет для комфорта глаз
+
+// Настройки адаптивной сетки
+$minWidth: 320; // Минимальная ширина страницы
+$maxWidth: 1440; // Ширина полотна (макета)
+$maxWidthContainer: 1240; // Ширина ограничивающего контейнера (0 = нет ограничения)
+// Общий отступ у контейнера
+$containerPadding: 40; // (30 = по 15px слева и справа, 0 = нет отступа)
+$containerPaddingMin: 20; // минимальный отступ
+// Ширина срабатывания первого брейкпоинта
+$containerWidth: $maxWidthContainer + $containerPadding;
+
+// Брейк-поинты
+$pc: em(1440); // ПК, ноутбуки, некоторые планшеты в горизонтальном положении
+$tablet: em(991.98); // Планшеты, некоторые телефоны в горизонтальном положении
+$mobileBig: em(767.98); // Телефоны L
+$mobile: em(639.98); // Телефоны L
+$mobileSmall: em(479.98); // Телефоны S
+
+// Тип адаптива:
+// 1 = отзывчивость (у контейнера нет брейкпоинтов),
+// 2 = по брейк-поинтам (контейнер меняет свою ширину по брейк-поинтам)
+$responsiveType: 1;
+// </VARIABLES>=================================
+
+// <ОБНУЛЕНИЕ>=================================
+@import "base/null";
+// </ОБНУЛЕНИЕ>=================================
+
+// <BODY>=================================
+body {
+	background: $mainBgColor;
+	color: $mainColor;
+	// @include adaptiveValue("font-size", 25, 18);
+	font-weight: 500;
+	line-height: 187.5%;
+	// Скролл заблокирован
+	.lock & {
+		overflow: hidden;
+		touch-action: none;
+		overscroll-behavior: none;
+	}
+	// Сайт загружен
+	.loaded & {
+		// transition: opacity 0.8s ease 0s;
+		// opacity: 1;
+	}
+}
+// </BODY>=================================
+
+// <WRAPPER>=================================
+.wrapper {
+	// width: 100%;
+	min-height: 100%;
+	display: flex;
+	flex-direction: column;
+	overflow: hidden;
+	// Прижимаем footer
+	> main {
+		flex: 1 1 auto;
+	}
+	// Фикс для слайдеров
+	> * {
+		min-width: 0;
+	}
+}
+// </WRAPPER>=================================
+
+// <CONTAINER>=================================
+/*
+(i) Стили будут применяться ко 
+всем классам содержащим *__container
+Например header__container, main__container и т.д.
+Снипет (HTML): cnt
+*/
+@if ($responsiveType==1) {
+	// Отзывчивая
+	[class*="__container"] {
+		@if ($maxWidthContainer>0) {
+			max-width: rem($containerWidth);
+			box-sizing: content-box;
+			margin: 0 auto;
+		}
+		@if ($containerPadding>0) {
+			@if ($maxWidthContainer>0) {
+				padding: 0 rem(math.div($containerPadding, 2));
+			} @else {
+				// @include adaptiveValue("padding-left", math.div($containerPadding, 2), $containerPaddingMin);
+				// @include adaptiveValue("padding-right", math.div($containerPadding, 2), $containerPaddingMin);
+			}
+		}
+	}
+} @else {
+	// По брейк-поинтам
+	[class*="__container"] {
+		margin: 0 auto;
+		@if ($maxWidthContainer>0) {
+			max-width: rem($maxWidthContainer);
+			box-sizing: content-box;
+		} @else {
+			@if ($containerPadding>0) {
+				padding: 0 rem(math.div($containerPadding, 2));
+			}
+		}
+		@media (max-width: $pc) {
+			max-width: rem(970);
+		}
+		@media (max-width: $tablet) {
+			max-width: rem(750);
+		}
+		@media (max-width: $mobileBig) {
+			max-width: none;
+			@if ($containerPadding>0 and $maxWidthContainer>0) {
+				padding: 0 rem(math.div($containerPadding, 2));
+			}
+		}
+	}
+}
+// </CONTAINER>=================================
+
+// <IMPORT>=================================
+// Подключение базовых стилей, шаблонов (заготовок) и вспомогательных  классов
+// Для подключения/отключения конкретных стилей смотри base.scss
+@import "base";
+@import "common"; // Подключение стилей общих элементов проекта
+// Подключение стилей отдельных блоков
+@import "header";
+@import "footer";
+// Подключение стилей отдельных страниц
+// @import "home";
+// </IMPORT>=================================
+
+// <ОБЩИЙ СТИЛЬ>=================================
+
+//</ОБЩИЕ СТИЛИ>=================================
+
+//<MAIN>=================================
+
+// ===<animation>===
+
+//</MAIN>=================================
+
+//<FEATURES>=================================
+
+//</FEATURES>=================================
+
+//<SERVICES>=================================
+
+//===<animation>===
+
+//</SERVICES>=================================
+
+//<REVIEWS>=================================
+
+//===<animation>===
+
+//</REVIEWS>=================================
+
+//<LOCATION>=================================
+
+//</LOCATION>=================================
+// </ОБЩИЙ СТИЛЬ>=================================
+
+//<screen-01>=================================
+
+//</screen-01>=================================
+
+//<screen-02>=================================
+
+//</screen-02>=================================
+
+//</screen-03>=================================
+
+//</screen-03>=================================
