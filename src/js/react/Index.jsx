@@ -15,7 +15,6 @@ const root = document.querySelector("#root")
 
 const restoService = new RestoService();
 
-
 // Main rendering
 ReactDOM.createRoot(root).render(
 	<React.StrictMode>

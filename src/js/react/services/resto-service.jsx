@@ -1,9 +1,7 @@
 export default class RestoServise {
-	constructor() {
-		this._SrvBase = 'http://localhost:3000/menu';
-	}
+	_ApiBase = 'http://localhost:3000';
 
-	getMenuItems = async (url) => {
+	getResource = async (url) => {
 		const res = await fetch(url);
 		//обработка ошибок
 		if (!res.ok) {
@@ -12,8 +10,8 @@ export default class RestoServise {
 		return res.json();
 	}
 
-	getMenu = async () => {
-		const menu = await this.getMenuItems(this._SrvBase);
+	getMenuItems = async () => {
+		const menu = await this.getResource(`${this._ApiBase}/menu/`);
 		return menu;
 	}
 }
