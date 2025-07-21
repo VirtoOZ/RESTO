@@ -7,7 +7,7 @@ import { Routes, Route } from "react-router";
 const App = () => {
 	return (
 		<div style={{ background: `url(${Background}) center center/cover no-repeat` }} className="app">
-			<AppHeader total={50} />
+			<AppHeader />
 			<Routes>
 				<Route path="/" element={<MainPage />} />
 				<Route path="/menu" element={<MainPage />} />

@@ -11,7 +11,6 @@ class MenuList extends Component {
 	componentDidMount() {
 		this.props.menuRequested();
 
-
 		const { RestoService } = this.props;
 		RestoService.getMenuItems()
 			.then(res => this.props.menuLoaded(res))

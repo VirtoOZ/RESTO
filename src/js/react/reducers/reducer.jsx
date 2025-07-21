@@ -3,11 +3,11 @@ const initianState = {
 	loading: true,
 	error: false,
 	items: [],
-	price: 0,
+	total: 0,
 };
 
 const reducer = (state = initianState, action) => {
-	console.log(state);
+	// console.log(state);
 	switch (action.type) {
 		case "MENU_LOADED":
 			return {
@@ -38,14 +38,14 @@ const reducer = (state = initianState, action) => {
 				url: itemWithId.url,
 				id: itemWithId.id,
 			};
-			console.log(newItem);
+			// console.log(newItem);
 			return {
 				...state,
 				items: [
 					...state.items,
 					newItem
 				],
-				price: state.price + newItem.price,
+				total: state.total + newItem.price,
 			};
 
 		case "ITEM_REMOVE_FROM_CARD":
@@ -53,7 +53,7 @@ const reducer = (state = initianState, action) => {
 			const itemInd = state.items.findIndex((item) => item.id === ind);
 			return {
 				...state,
-				price: state.price - state.items[itemInd].price,
+				total: state.total - state.items[itemInd].price,
 				items: [
 					...state.items.slice(0, itemInd),
 					...state.items.slice(itemInd + 1),

@@ -12,7 +12,7 @@ const menuRequested = () => {
 };
 
 const addedToCard = (id) => {
-	console.log(`Сработка id:${id}`);
+	// console.log(`Сработка id:${id}`);
 	return {
 		type: 'ITEM_ADD_TO_CARD',
 		payload: id,
