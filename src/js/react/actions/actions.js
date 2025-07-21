@@ -32,10 +32,17 @@ const deleteFromCard = (id) => {
 	};
 };
 
+const calcPrice = () => {
+	return {
+		type: 'ITEM_PRICE_TO_CARD',
+	};
+};
+
 export {
 	menuLoaded,
 	menuRequested,
 	// menuError,
 	addedToCard,
 	deleteFromCard,
+	calcPrice,
 }

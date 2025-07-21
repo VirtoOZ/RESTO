@@ -48,7 +48,6 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = {
-	// menuLoaded: (newMenu) => dispatch(menuLoaded(newMenu)),
 	menuLoaded,
 	menuRequested,
 	// menuError,

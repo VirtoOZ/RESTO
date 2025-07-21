@@ -20,6 +20,20 @@
 			"url": "https://www.pizzanapoletana.org/struttura/pagine_bicolor/mobile/decalogo_avpn_1.jpg",
 			"category": "pizza",
 			"id": 3
+		},
+		{
+			"title": "Greece salad",
+			"price": 8,
+			"url": "https://assets.epicurious.com/photos/576454fb42e4a5ed66d1df6b/master/pass/greek-salad.jpg",
+			"category": "salads",
+			"id": 4
+		},
+		{
+			"title": "Cowboy Steak",
+			"price": 25,
+			"url": "https://i.cbc.ca/1.4491288.1516208229!/fileImage/httpImage/image.jpg_gen/derivatives/16x9_780/cowboysteak.jpg",
+			"category": "meat",
+			"id": 5
 		}
 	]
 }
