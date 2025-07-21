@@ -5,7 +5,7 @@ window['FLS'] = true;
 import "../scss/style.scss";
 
 //<React>=================================
-import Index from './react/Index.jsx';
+import Index from './react/index.jsx';
 
 //<Функционал>=================================
 import * as flsFunctions from "./files/functions.js";

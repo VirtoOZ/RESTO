@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import MenuListItem from '../menu-list-item/menu-list-item.jsx';
 import WithRestoService from '../hoc/with-resto-service.jsx';
 import { connect } from 'react-redux';
-import { menuLoaded, menuRequested, menuError } from '../../actions/index.js';
+import { menuLoaded, menuRequested, addedToCard } from '../../actions/actions.js';
 import Spinner from '../spinner/spinner.jsx';
 import './menu-list.scss';
 
@@ -15,10 +15,10 @@ class MenuList extends Component {
 		const { RestoService } = this.props;
 		RestoService.getMenuItems()
 			.then(res => this.props.menuLoaded(res))
-			.catch(this.props.menuError());
+			.catch();
 	}
 	render() {
-		const { menuItems, loading } = this.props;
+		const { menuItems, loading, addedToCard } = this.props;
 		if (loading) {
 			return <Spinner />;
 		}
@@ -26,7 +26,13 @@ class MenuList extends Component {
 			<ul className="menu__list">
 				{
 					menuItems.map(
-						(manuItem) => <MenuListItem key={manuItem.id} menuItem={manuItem} />
+						(menuItem) => {
+							return <MenuListItem
+								key={menuItem.id}
+								menuItem={menuItem}
+								onAddToCard={() => addedToCard(menuItem.id)}
+							/>
+						}
 					)
 				}
 			</ul>
@@ -41,16 +47,12 @@ const mapStateToProps = (state) => {
 	}
 }
 
-const mapDispatchToProps = (dispatch) => {
-	return {
-		menuLoaded: (newMenu) => {
-			dispatch(
-				menuLoaded(newMenu)
-			)
-		},
-		menuRequested,
-		menuError,
-	}
+const mapDispatchToProps = {
+	// menuLoaded: (newMenu) => dispatch(menuLoaded(newMenu)),
+	menuLoaded,
+	menuRequested,
+	// menuError,
+	addedToCard,
 }
 
 export default WithRestoService()(connect(mapStateToProps, mapDispatchToProps)(MenuList));

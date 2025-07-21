@@ -1,8 +1,9 @@
 import React from 'react';
 import './cart-table.scss';
 import { connect } from 'react-redux';
+import { deleteFromCard } from '../../actions/actions';
 
-const CartTable = ({ items, onDelete }) => {
+const CartTable = ({ items, deleteFromCard }) => {
 
 	return (
 		<>
@@ -12,11 +13,11 @@ const CartTable = ({ items, onDelete }) => {
 					items.map((item) => {
 						const { title, id, url, price } = item;
 						return (
-							<div className="cart__item">
+							<div key={id} className="cart__item">
 								<img src={url} className="cart__item-img" alt={title}></img>
 								<div className="cart__item-title">{title}</div>
 								<div className="cart__item-price">{price}$</div>
-								<div className="cart__close" onClick={() => onDelete(id)}>&times;</div>
+								<div className="cart__close" onClick={() => deleteFromCard(id)}>&times;</div>
 							</div>
 						)
 					})
@@ -26,11 +27,14 @@ const CartTable = ({ items, onDelete }) => {
 	);
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = ({ items }) => {
 	return {
-
+		items,
 	}
 };
 
+const mapDispatchToProps = {
+	deleteFromCard,
+};
 
-export default connect(,)(CartTable);
+export default connect(mapStateToProps, mapDispatchToProps)(CartTable);
