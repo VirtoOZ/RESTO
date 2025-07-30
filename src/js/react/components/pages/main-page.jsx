@@ -5,6 +5,6 @@ const MainPage = () => {
 	return (
 		<MenuList />
 	)
-}
+};
 
 export default MainPage;

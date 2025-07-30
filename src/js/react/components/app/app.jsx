@@ -2,7 +2,7 @@ import React from 'react';
 import { MainPage, CartPage } from '../pages/index.jsx';
 import AppHeader from '../app-header/app-header.jsx';
 import Background from './food-bg.jpg';
-import { Routes, Route } from "react-router";
+import { Routes, Route, Switch } from "react-router";
 
 const App = () => {
 	return (
@@ -10,7 +10,7 @@ const App = () => {
 			<AppHeader />
 			<Routes>
 				<Route path="/" element={<MainPage />} />
-				<Route path="/menu" element={<MainPage />} />
+				<Route path="/home" element={<MainPage />} />
 				<Route path="/cart/" element={<CartPage />} />
 			</Routes>
 		</div>

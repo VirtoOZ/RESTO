@@ -7,6 +7,6 @@ const CartPage = () => {
 			<CartTable />
 		</div>
 	)
-}
+};
 
 export default CartPage;

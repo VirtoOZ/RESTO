@@ -39,22 +39,22 @@ const reducer = (state = initianState, action) => {
 				title: itemWithId.title,
 				price: itemWithId.price,
 				url: itemWithId.url,
-				id: itemWithId.id,
+				id: `${itemWithId.id}-${itemWithId.category}`,
 				x: 1
 			};
-			console.log(state.items);
-			if (findEl(state.items)) {
-				const findDuble = findEl(state.items);
-				findDuble.x += 1;
-				findDuble.id = `${findDuble.id}${findDuble.x}`
-				// console.log(findDuble);
-				return {
-					...state,
-					items: [
-						...state.items,
-					],
-				}
-			}
+			// console.log(state.items);
+			// if (findEl(state.items)) {
+			// 	const findDuble = findEl(state.items);
+			// 	findDuble.x += 1;
+			// 	findDuble.id = `${findDuble.id}${findDuble.x}`
+			// 	// console.log(findDuble);
+			// 	return {
+			// 		...state,
+			// 		items: [
+			// 			...state.items,
+			// 		],
+			// 	}
+			// }
 			return {
 				...state,
 				items: [
@@ -63,9 +63,6 @@ const reducer = (state = initianState, action) => {
 				],
 				total: state.total + newItem.price,
 			};
-
-		// console.log(findDuble);
-		// if (findDuble) {
 
 		case "ITEM_REMOVE_FROM_CARD":
 			const ind = action.payload;

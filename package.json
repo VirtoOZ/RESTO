@@ -6,6 +6,7 @@
 	"private": true,
 	"license": "ISC",
 	"type": "module",
+	"homepage": ".",
 	"scripts": {
 		"start": "npm i --legacy-peer-deps",
 		"dev": "gulp && webpack serve --progress -c config/webpack.dev.js",
