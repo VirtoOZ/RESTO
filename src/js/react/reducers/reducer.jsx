@@ -7,7 +7,6 @@ const initianState = {
 };
 
 const reducer = (state = initianState, action) => {
-	// console.log(state);
 	switch (action.type) {
 		case "MENU_LOADED":
 			return {
@@ -23,62 +22,60 @@ const reducer = (state = initianState, action) => {
 				loading: true,
 			};
 
-		// case "MENU_ERROR":
-		// 	return {
-		// 		...state,
-		// 		error: true,
-		// 	};
-
 		case "ITEM_ADD_TO_CARD":
 			const id = action.payload;
 			const findEl = (arr) => {
 				return arr.find(item => item.id === id);
 			}
-			const itemWithId = findEl(state.menu);
-			const newItem = {
-				title: itemWithId.title,
-				price: itemWithId.price,
-				url: itemWithId.url,
-				id: `${itemWithId.id}-${itemWithId.category}`,
-				x: 1
-			};
-			// console.log(state.items);
-			// if (findEl(state.items)) {
-			// 	const findDuble = findEl(state.items);
-			// 	findDuble.x += 1;
-			// 	findDuble.id = `${findDuble.id}${findDuble.x}`
-			// 	// console.log(findDuble);
-			// 	return {
-			// 		...state,
-			// 		items: [
-			// 			...state.items,
-			// 		],
-			// 	}
-			// }
-			return {
-				...state,
-				items: [
-					...state.items,
-					newItem
-				],
-				total: state.total + newItem.price,
-			};
+			if (findEl(state.items)) {
+				console.log('yes');
+				const findDubleWithId = findEl(state.items);
+				console.log(findDubleWithId);
+				findDubleWithId.x = findDubleWithId.x + 1;
+				findDubleWithId.key = `${findDubleWithId.title} = x${findDubleWithId.x}`;
+				return {
+					...state,
+					total: state.total + findDubleWithId.price,
+				}
+			} else {
+				const itemWithId = findEl(state.menu);
+				const newItem = {
+					x: 1,
+					title: itemWithId.title,
+					price: itemWithId.price,
+					url: itemWithId.url,
+					id: itemWithId.id,
+					key: `id=${itemWithId.id}`,
+				};
+				return {
+					...state,
+					items: [
+						...state.items,
+						newItem
+					],
+					total: state.total + newItem.price,
+				};
+			}
 
 		case "ITEM_REMOVE_FROM_CARD":
 			const ind = action.payload;
 			const itemInd = state.items.findIndex((item) => item.id === ind);
-			return {
-				...state,
-				total: state.total - state.items[itemInd].price,
-				items: [
-					...state.items.slice(0, itemInd),
-					...state.items.slice(itemInd + 1),
-				],
-			};
-		// case 'ITEM_PRICE_TO_CARD':
-		// 	return {
-		// 		...state,
-		// 	}
+			if (state.items[itemInd].x > 1) {
+				state.items[itemInd].x -= 1;
+				return {
+					...state,
+					total: state.total - state.items[itemInd].price,
+				}
+			} else {
+				return {
+					...state,
+					total: state.total - state.items[itemInd].price,
+					items: [
+						...state.items.slice(0, itemInd),
+						...state.items.slice(itemInd + 1),
+					],
+				};
+			}
 		default: return state;
 	}
 }

@@ -4,27 +4,26 @@ import { connect } from 'react-redux';
 import { deleteFromCard } from '../../actions/actions';
 import CatrItem from '../cart-table-item/cart-table-item.jsx'
 
-const CartTable = ({ items, deleteFromCard, total }) => {
+const CartTable = ({ items, deleteFromCard }) => {
 
 	return (
 		<>
 			<div className="cart__title">Ваш заказ:</div>
 			<ul className="cart__list">
 				{
-					items.map((item, i) => {
-						const { title, id, url, price, x } = item;
+					items.map(item => {
+						const { key, title, id, url, price, x } = item;
 						if (item.id === id) {
 						};
-						// arr.find(item => item.id === id)
-						// const item = items[i];
 						const renderItem = (
 							<CatrItem
-								key={id}
+								key={key}
+								id={id}
 								title={title}
 								url={url}
 								price={price}
 								deleteFromCard={deleteFromCard}
-							/>)
+								x={x} />)
 						return renderItem;
 					})
 				}
@@ -34,7 +33,6 @@ const CartTable = ({ items, deleteFromCard, total }) => {
 };
 
 const mapStateToProps = ({ items, total }) => {
-	// console.log(items);
 	return {
 		items,
 		total
