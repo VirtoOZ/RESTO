@@ -13865,6 +13865,9 @@
             path: "/",
             element: react.createElement(components_MenuList, null)
         }), react.createElement(Route, {
+            path: "/RESTO/",
+            element: react.createElement(components_MenuList, null)
+        }), react.createElement(Route, {
             path: "/home",
             element: react.createElement(components_MenuList, null)
         }), react.createElement(Route, {
