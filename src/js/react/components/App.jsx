@@ -12,6 +12,7 @@ export const App = () => {
 					<section className="menu">
 						<Routes>
 							<Route path="/" element={<MenuList />} />
+							<Route path="/RESTO/" element={<MenuList />} />
 							<Route path="/home" element={<MenuList />} />
 							<Route path="/cart/" element={<CartPage />} />
 						</Routes>
