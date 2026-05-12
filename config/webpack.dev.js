@@ -2,24 +2,21 @@ import fs from 'fs';
 import FileIncludeWebpackPlugin from 'file-include-webpack-plugin-replace';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import CopyPlugin from "copy-webpack-plugin";
-
 import * as path from 'path';
+import sharp from 'sharp';
+import ImageMinimizerPlugin from 'image-minimizer-webpack-plugin';
 
 const srcFolder = "src";
 const builFolder = "dist";
 const rootFolder = path.basename(path.resolve());
 
-let pugPages = fs.readdirSync(srcFolder).filter(fileName => fileName.endsWith('.pug'))
-let htmlPages = []
-
+let pugPages = fs.readdirSync(srcFolder).filter(fileName => fileName.endsWith('.pug'));
+let htmlPages = [];
 
 if (!pugPages.length) {
 	htmlPages = [new FileIncludeWebpackPlugin({
 		source: srcFolder,
-		htmlBeautifyOptions: {
-			"indent-with-tabs": true,
-			'indent_size': 3
-		},
+		htmlBeautifyOptions: { "indent-with-tabs": true, 'indent_size': 3 },
 		replace: [
 			{ regex: '<link rel="stylesheet" href="css/style.min.css">', to: '' },
 			{ regex: '../img', to: 'img' },
@@ -28,21 +25,15 @@ if (!pugPages.length) {
 		],
 	})];
 }
-const paths = {
-	src: path.resolve(srcFolder),
-	build: path.resolve(builFolder)
-}
-const config = {
-	mode: "development",
+
+const paths = { src: path.resolve(srcFolder), build: path.resolve(builFolder) };
+
+export default {
+	mode: 'development',
 	devtool: 'inline-source-map',
-	optimization: {
-		minimize: false
-	},
-	entry: [
-		`${paths.src}/js/app.js`
-	],
+	entry: [`${paths.src}/js/app.js`],
 	output: {
-		path: `${paths.build}`,
+		path: paths.build,
 		filename: 'js/app.min.js',
 		publicPath: '/'
 	},
@@ -53,12 +44,13 @@ const config = {
 		compress: true,
 		port: 'auto',
 		hot: true,
-		host: 'local-ip', // localhost
+		host: 'local-ip',
+		// localhost
 		//В режиме разработчика папка 
 		// результатом (dist) будет создаваться на диске)
-		//devMiddleware: {
-		//	writeToDisk: true,
-		//},
+		devMiddleware: {
+			writeToDisk: true,
+		},
 		watchFiles: [
 			`${paths.src}/**/*.html`,
 			`${paths.src}/**/*.pug`,
@@ -74,20 +66,10 @@ const config = {
 				exclude: `${paths.src}/fonts`,
 				use: [
 					'style-loader',
+					{ loader: 'string-replace-loader', options: { search: '@img', replace: '../img', flags: 'g' } },
 					{
-						loader: 'string-replace-loader',
-						options: {
-							search: '@img',
-							replace: '../img',
-							flags: 'g'
-						}
-					}, {
-						loader: 'css-loader',
-						options: {
-							sourceMap: true,
-							importLoaders: 1,
-							modules: false,
-							url: {
+						loader: 'css-loader', options: {
+							sourceMap: true, importLoaders: 1, modules: false, url: {
 								filter: (url, resourcePath) => {
 									if (url.includes("img/") || url.includes("fonts/")) {
 										return false;
@@ -95,29 +77,20 @@ const config = {
 									return true;
 								},
 							},
-						},
-					}, {
-						loader: 'sass-loader',
-						options: {
-							sourceMap: true,
 						}
-					}
+					},
+					{ loader: 'sass-loader', options: { sourceMap: true } }
 				],
-			}, {
+			},
+			{
 				test: /\.pug$/,
 				use: [
-					{
-						loader: 'pug-loader'
-					}, {
-						loader: 'string-replace-loader',
-						options: {
-							search: '@img',
-							replace: 'img',
-							flags: 'g'
-						}
-					}
+					{ loader: '@webdiscus/pug-loader' },
+					{ loader: 'string-replace-loader', options: { search: '@img', replace: 'img', flags: 'g' } }
 				]
-			}, {
+			},
+			// =======
+			{
 				test: /\.(jsx)$/,
 				exclude: /node_modules/,
 				use: [
@@ -128,22 +101,46 @@ const config = {
 							replace: '../../img',
 							flags: 'g'
 						}
-					}, {
+					},
+					{
 						loader: "babel-loader",
 						options: {
 							presets: ["@babel/preset-react"]
 						}
 					}
 				],
-			}, {
-				test: /\.(png|jpe?g|gif|svg)$/i,
+			},
+			// =====
+
+			// {
+			// 	test: /\.(jsx?)$/,
+			// 	exclude: /node_modules/,
+			// 	use: {
+			// 		loader: "babel-loader",
+			// 		options: {
+			// 			presets: ['@babel/preset-env', ["@babel/preset-react", { runtime: "automatic" }]],
+			// 			plugins: ['./babel-plugin-img-to-picture.js'] // плагин автоподмены
+			// 		}
+			// 	}
+			// },
+			// {
+			// 	test: /\.(png|jpe?g|gif|svg)$/i,
+			// 	type: 'asset/resource',
+			// 	generator: { filename: 'images/[name][ext]' }
+			// },
+			{
+				test: /\.(png|jpe?g)$/i,
+				resourceQuery: /webp/,
 				use: [
-					{
-						loader: 'file-loader',
-					},
-				],
+					{ loader: 'responsive-loader', options: { adapter: sharp, format: 'webp', quality: 80 } }
+				]
+			},
+			{
+				test: /\.tsx?$/,
+				use: 'ts-loader',
+				exclude: /node_modules/
 			}
-		],
+		]
 	},
 	plugins: [
 		...htmlPages,
@@ -154,19 +151,32 @@ const config = {
 		})),
 		new CopyPlugin({
 			patterns: [
-				{
-					from: `${srcFolder}/img`, to: `img`,
-					noErrorOnMissing: true,
-					force: true
-				}, {
-					from: `${srcFolder}/files`, to: `files`,
-					noErrorOnMissing: true,
-					force: true
-				}, {
-					from: `${paths.src}/favicon.ico`, to: `./`,
-					noErrorOnMissing: true
-				}
+				{ from: `${srcFolder}/img`, to: `img`, noErrorOnMissing: true },
+				{ from: `${srcFolder}/files`, to: `files`, noErrorOnMissing: true },
+				{ from: `${paths.src}/favicon.ico`, to: `./`, noErrorOnMissing: true }
 			],
+		}),
+		new ImageMinimizerPlugin({
+			minimizer: {
+				implementation: ImageMinimizerPlugin.imageminGenerate,
+				options: {
+					plugins: [
+						["imagemin-mozjpeg", { quality: 80 }],
+						["imagemin-pngquant", { quality: [0.6, 0.8] }]
+					]
+				}
+			},
+			generator: [
+				{
+					preset: "webp",
+					implementation: ImageMinimizerPlugin.imageminGenerate,
+					options: {
+						plugins: [
+							["imagemin-webp", { quality: 80 }]
+						]
+					}
+				}
+			]
 		})
 	],
 	resolve: {
@@ -175,6 +185,6 @@ const config = {
 			"@js": `${paths.src}/js`,
 			"@img": `${paths.src}/img`
 		},
-	},
-}
-export default config;
+		extensions: ['.js', '.jsx', '.tsx', '.ts']
+	}
+};

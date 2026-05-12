@@ -1,0 +1,26 @@
+@use "../abstracts" as *;
+
+//<FOOTER>=================================
+.footer {
+	text-align: center;
+	position: relative;
+	z-index: 2;
+	@include AV("margin-top", 32, 16);
+	@include AV("padding-bottom", 32, 16);
+	&__wrapper {
+		display: flex;
+		justify-content: space-around;
+		gap: rems(30);
+	}
+	&__content {
+		color: #fff;
+		transition: text-shadow 0.3s ease 0s;
+		@include AV("font-size", 32, 16);
+		@media (any-hover: hover) {
+			&:hover {
+				text-shadow: rems(0) rems(10) rems(5) #fff;
+			}
+		}
+	}
+}
+//</FOOTER>=================================

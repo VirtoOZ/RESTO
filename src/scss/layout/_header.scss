@@ -1,0 +1,33 @@
+@use "../abstracts" as *;
+@use "sass:math";
+
+//<HEADER>=================================
+.header {
+	background-color: rgba(0, 0, 0, 0.5);
+	position: relative;
+	z-index: 2;
+	// padding: 0 50px;
+	&__container {
+		height: 60px;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+	}
+	&__link {
+		display: flex;
+		// margin-right: 40px;
+		font-size: 18px;
+		color: #fff;
+		text-decoration: none;
+	}
+	&__cart {
+		width: 20px;
+		margin-right: 10px;
+	}
+	&__logo {
+		justify-self: center;
+		// justify-self: center;
+		font-size: 30px;
+		color: #fff;
+	}
+}

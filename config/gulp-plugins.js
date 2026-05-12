@@ -5,6 +5,7 @@ import plumber from "gulp-plumber";
 import ifPlugin from "gulp-if";
 import prettier from "gulp-prettier";
 import rename from 'gulp-rename';
+import ts from 'gulp-typescript';
 
 // Экспортируем объект
 export const plugins = {

@@ -7,8 +7,8 @@ export const js = () => {
 			app.plugins.notify.onError({
 				title: "JS",
 				message: "Error: <%= error.message %>"
-			}))
-		)
+			})
+		))
 		.pipe(webpack({
 			config: webPackConfig
 		}))

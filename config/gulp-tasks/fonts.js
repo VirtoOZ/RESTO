@@ -25,7 +25,8 @@ export const otfToTtf = () => {
 		}))
 		// Выгружаем в исходную папку
 		.pipe(app.gulp.dest(`${app.path.srcFolder}/fonts/`))
-}
+};
+
 export const ttfToWoff2 = () => {
 	// Ищем файлы шрифтов .ttf
 	return app.gulp.src(`${app.path.srcFolder}/fonts/*.ttf`, { encoding: false })
@@ -39,9 +40,10 @@ export const ttfToWoff2 = () => {
 		.pipe(ttf2woff2())
 		// Выгружаем в папку с результатом
 		.pipe(app.gulp.dest(`${app.path.build.fonts}`))
-}
+};
+
 export const woff2Copy = () => {
-	// Ищем файлы шрифтов .ttf
+	// Ищем файлы шрифтов .woff2
 	return app.gulp.src(`${app.path.srcFolder}/fonts/*.woff2`, { encoding: false })
 		.pipe(app.plugins.plumber(
 			app.plugins.notify.onError({
@@ -51,7 +53,8 @@ export const woff2Copy = () => {
 		)
 		// Выгружаем в папку с результатом
 		.pipe(app.gulp.dest(`${app.path.build.fonts}`))
-}
+};
+
 export const fontsStyle = () => {
 	let fontsFile = `${app.path.srcFolder}/scss/fonts/fonts.scss`;
 	// Если передан флаг --rewrite удаляем файл подключения шрифтов
@@ -64,7 +67,7 @@ export const fontsStyle = () => {
 				// Если файла нет, создаем его
 				fs.writeFile(fontsFile, '', cb);
 				let newFileOnly;
-				for (var i = 0; i < fontsFiles.length; i++) {
+				for (let i = 0; i < fontsFiles.length; i++) {
 					let fontFileName = fontsFiles[i].split(".")[0];
 					if (newFileOnly !== fontFileName) {
 						let fontName = fontFileName.split("-")[0]
@@ -133,5 +136,5 @@ export const fontsStyle = () => {
 		}
 	});
 	return app.gulp.src(`${app.path.srcFolder}`);
-}
+};
 function cb() { }

@@ -1,5 +1,5 @@
-
 import fs from 'fs';
+
 export const gitignore = () => {
 	if (!fs.existsSync('.gitignore')) {
 		fs.writeFile('./.gitignore', '', cb);

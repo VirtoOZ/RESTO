@@ -11,29 +11,32 @@ const paths = {
 	build: path.resolve(builFolder)
 }
 
-let webPackConfigBeautify = Object.assign({}, webPackConfig);
+let webPackConfigBeautify = { ...webPackConfig };
+// let webPackConfigBeautify = Object.assign({}, webPackConfig);
 
 webPackConfigBeautify.optimization = {
-	minimizer: [new TerserPlugin({
-		extractComments: false,
-		terserOptions: {
-			ecma: undefined,
-			warnings: false,
-			parse: {},
-			compress: {
-				defaults: false,
-				unused: true,
-			},
-			mangle: false,
-			module: false,
-			toplevel: true,
-			keep_classnames: true,
-			keep_fnames: true,
-			format: {
-				beautify: true
+	minimizer: [
+		new TerserPlugin({
+			extractComments: false,
+			terserOptions: {
+				ecma: undefined,
+				warnings: false,
+				parse: {},
+				compress: {
+					defaults: false,
+					unused: true,
+				},
+				mangle: false,
+				module: false,
+				toplevel: true,
+				keep_classnames: true,
+				keep_fnames: true,
+				format: {
+					beautify: true
+				}
 			}
-		}
-	})],
+		})
+	],
 }
 webPackConfigBeautify.output = {
 	path: `${paths.build}`,
@@ -47,10 +50,10 @@ export const jsDev = () => {
 			app.plugins.notify.onError({
 				title: "JS",
 				message: "Error: <%= error.message %>"
-			}))
-		)
+			})
+		))
 		.pipe(webpack({
 			config: webPackConfigBeautify
 		}))
 		.pipe(app.gulp.dest(app.path.build.js));
-}
+};

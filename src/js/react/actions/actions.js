@@ -25,7 +25,7 @@ const addedToCard = (id) => {
 // 	};
 // };
 
-const deleteFromCard = (id) => {
+const deleteFromCart = (id) => {
 	return {
 		type: 'ITEM_REMOVE_FROM_CARD',
 		payload: id,
@@ -43,6 +43,6 @@ export {
 	menuRequested,
 	// menuError,
 	addedToCard,
-	deleteFromCard,
+	deleteFromCart,
 	calcPrice,
-}
+};

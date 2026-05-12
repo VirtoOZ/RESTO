@@ -9,14 +9,12 @@ export const html = () => {
 				message: "Error: <%= error.message %>"
 			}))
 		)
-		/*
-		.pipe(
-			app.plugins.if(
-				app.isWebP,
-				webpHtmlNosvg()
-			)
-		)
-		*/
+		// При запуске любого сценария кроме npm run devbuild app.isWebP
+		// принимает true и запускается плагин "gulp-webp-html-nosvg"
+		.pipe(app.plugins.if(app.isWebP,
+			// что делает плагин?
+			webpHtmlNosvg()
+		))
 		.pipe(versionNumber({
 			'value': '%DT%',
 			'append': {
@@ -29,4 +27,4 @@ export const html = () => {
 			}
 		}))
 		.pipe(app.gulp.dest(app.path.build.html));
-}
+};

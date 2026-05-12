@@ -1,0 +1,68 @@
+@use "../abstracts" as *;
+
+//<Стили для кнопок>=================================
+.button {
+	border-radius: rems(10);
+	cursor: pointer;
+	background-color: var(--btn-bgc);
+	transition:
+		background-color 0.3s ease 0s,
+		border 0.3s ease 0s,
+		box-shadow 0.3s ease 0s,
+		color 0.3s ease 0s;
+	@include AV("padding-top", 20, 15);
+	@include AV("padding-bottom", 18, 12);
+	@include AV("padding-left", 40, 25);
+	@include AV("padding-right", 40, 25);
+	@include AV("font-size", 35, 16);
+	&__red {
+		border: 1px solid var(--btn-red-border);
+		color: var(--btn-red-color);
+	}
+	&__orange {
+		border: 1px solid var(--btn-orange-border);
+		color: var(--btn-orange-color);
+	}
+
+	&__blue {
+		border: 1px solid var(--btn-blue-border);
+		color: var(--btn-blue-color);
+	}
+	&__green {
+		border-radius: rems(25);
+		border: 1px solid rgba(62, 210, 25, 0.5);
+		color: var(--btn-green-color);
+		background-color: var(--btn-green-bg);
+		width: 100%;
+		font-weight: 600;
+		@include AV("font-size", 45, 22);
+	}
+
+	@media (any-hover: hover) {
+		&__orange:hover {
+			color: var(--btn-orange-color-hov);
+			border: 1px solid var(--btn-orange-border-hov);
+			background-color: var(--btn-orange-bg-hov);
+		}
+
+		&__blue:hover {
+			color: var(--btn-blue-color-hv);
+			background-color: var(--btn-blue-bg);
+			border: 1px solid var(--btn-blue-border-hv);
+		}
+
+		&__red:hover {
+			color: var(--btn-red-color-hv);
+			background-color: var(--btn-red-bg);
+			border: 1px solid var(--btn-red-border-hv);
+		}
+		&__green:hover {
+			color: var(--btn-green-color);
+			background-color: var(--btn-green-bg);
+			border: rems(2) solid var(--btn-green-border-hv);
+			box-shadow: 0 0 rems(10) var(--btn-green-boxs-hv);
+		}
+	}
+}
+
+//<Стили для кнопок>=================================

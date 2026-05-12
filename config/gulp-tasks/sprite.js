@@ -1,13 +1,15 @@
 import svgSprite from "gulp-svg-sprite";
 import cheerio from 'gulp-cheerio';
+
 export const sprite = () => {
-	return app.gulp.src(`${app.path.src.svgicons}`, {})
+	// return app.gulp.src(`${app.path.src.svgicons}`, {})
+	return app.gulp.src(`${app.path.src.svgicons}`)
 		.pipe(app.plugins.plumber(
 			app.plugins.notify.onError({
 				title: "SVG",
 				message: "Error: <%= error.message %>"
-			}))
-		)
+			})
+		))
 		.pipe(svgSprite({
 			mode: {
 				symbol: {
@@ -49,7 +51,6 @@ export const sprite = () => {
 						$(this).attr('fill', 'currentColor');
 					}
 				});
-
 				// Для атрибута stroke
 				$('[stroke]').each(function () {
 					const strokeValue = $(this).attr('stroke');
@@ -62,6 +63,4 @@ export const sprite = () => {
 			parserOptions: { xmlMode: true }
 		}))
 		.pipe(app.gulp.dest(`${app.path.srcFolder}`));
-
-
-}
+};

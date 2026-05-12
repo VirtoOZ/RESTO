@@ -1,0 +1,85 @@
+@use "../abstracts/" as *;
+
+.app {
+	&__img img {
+		position: absolute;
+		width: 100%;
+		height: 100%;
+		top: 0;
+		left: 0;
+		object-fit: cover;
+	}
+}
+
+.page {
+	flex: 1 1 auto;
+	position: relative;
+	z-index: 2;
+	// .page__section
+	&__section {
+		// flex: 1 1 50%;
+		position: relative;
+		z-index: 2;
+		padding: rems(15) 0;
+	}
+
+	&__bg img {
+		position: absolute;
+		width: 100%;
+		height: 100%;
+		top: 0;
+		left: 0;
+		object-fit: cover;
+		object-position: center;
+	}
+}
+
+.list {
+	background-color: #fff;
+	border-radius: rems(7);
+	transition: box-shadow 0.3s ease 0s;
+	@include AV("padding", 20, 5);
+	& > :not(:last-child) {
+		position: relative;
+		&::after {
+			content: "";
+			width: 100%;
+			height: 1%;
+			background-color: #99999940;
+			display: block;
+			position: absolute;
+			bottom: 0;
+			left: 0;
+		}
+	}
+	// .list__item
+	&__item {
+		display: flex;
+		justify-content: space-between;
+		padding: rems(10) rems(10);
+	}
+	// .list__title
+	&__title {
+		display: flex;
+		justify-content: center;
+		padding: rems(5) rems(10);
+		font-weight: 600;
+		@include AV("font-size", 30, 20);
+	}
+	// .list__label
+	&__label {
+		font-weight: 800;
+		font-size: rems(18);
+	}
+	// .list__value
+	&__value {
+		color: #083600;
+		font-weight: 500;
+		font-size: rems(18);
+	}
+	@media (any-hover: hover) {
+		&:hover {
+			box-shadow: 0 0 rems(15) rgba(255, 255, 255, 1);
+		}
+	}
+}

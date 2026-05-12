@@ -1,9 +1,8 @@
-// Импорт основного модуля
 import gulp from "gulp";
 // Импорт общих плагинов
 import { plugins } from "./config/gulp-plugins.js";
 // Импорт путей
-import { pathtofiles } from "./config/gulp-settings.js";
+import { pathToFile } from "./config/gulp-path.js";
 // Импорт функционала NodeJS
 import fs from 'fs';
 
@@ -14,9 +13,9 @@ global.app = {
 	isWebP: !process.argv.includes('--nowebp'),
 	isImgOpt: !process.argv.includes('--noimgopt'),
 	isFontsReW: process.argv.includes('--rewrite'),
-	gulp: gulp,
-	path: pathtofiles,
-	plugins: plugins
+	gulp,
+	path: pathToFile,
+	plugins
 }
 
 // Импорт задач
@@ -25,7 +24,7 @@ import { html } from "./config/gulp-tasks/html.js";
 import { css } from "./config/gulp-tasks/css.js";
 import { js } from "./config/gulp-tasks/js.js";
 import { jsDev } from "./config/gulp-tasks/js-dev.js";
-import { WebP, imagesOptimize, copySvg } from "./config/gulp-tasks/images.js";
+import { WebP, copySvg } from "./config/gulp-tasks/images.js";
 import { ftp } from "./config/gulp-tasks/ftp.js";
 import { zip } from "./config/gulp-tasks/zip.js";
 import { sprite } from "./config/gulp-tasks/sprite.js";
@@ -46,17 +45,11 @@ const fonts = gulp.series(reset, function (done) {
 // Порядок выполнения задач для режима разработчик
 const devTasks = gulp.series(fonts, gitignore);
 // Порядок выполнения задач для режима продакшн
-const buildTasks = gulp.series(fonts, jsDev, js, gulp.parallel(html, css, gulp.parallel(WebP, copySvg), gitignore));
+// const buildTasks = gulp.series(fonts, jsDev, js, gulp.parallel(html, css, gulp.parallel(WebP, copySvg), gitignore));
+const buildTasks = gulp.series(fonts, jsDev, js, gulp.parallel(html, gulp.parallel(WebP, copySvg), gitignore));
 
 // Экспорт задач
-export { html }
-export { css }
-export { js }
-export { jsDev }
-export { fonts }
-export { sprite }
-export { ftp }
-export { zip }
+export { html, css, js, jsDev, fonts, sprite, ftp, zip };
 
 // Построение сценариев выполнения задач
 const development = devTasks;
@@ -65,10 +58,7 @@ const deployFTP = gulp.series(buildTasks, ftp);
 const deployZIP = gulp.series(buildTasks, zip);
 
 // Экспорт сценариев
-export { development }
-export { build }
-export { deployFTP }
-export { deployZIP }
+export { development, build, deployFTP, deployZIP };
 
 // Выполнение сценария по умолчанию
 gulp.task('default', development);
