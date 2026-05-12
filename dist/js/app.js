@@ -14523,9 +14523,7 @@
                 });
             };
             if (findEl(state.items)) {
-                console.log("yes");
                 var findDubleWithId = findEl(state.items);
-                console.log(findDubleWithId);
                 findDubleWithId.x = findDubleWithId.x + 1;
                 findDubleWithId.key = "".concat(findDubleWithId.title, " = x").concat(findDubleWithId.x);
                 return _objectSpread(_objectSpread({}, state), {}, {
@@ -14568,6 +14566,39 @@
     };
     const reducers_reducer = reducer;
     var store = createStore(reducers_reducer);
+    const db = {
+        menu: [ {
+            title: "Cesar salad",
+            price: 12,
+            url: "https://static.1000.menu/img/content/21458/-salat-cezar-s-kr-salat-cezar-s-krevetkami-s-maionezom_1501173720_1_max.jpg",
+            category: "salads",
+            id: 1
+        }, {
+            title: "Pizza Margherita",
+            price: 10,
+            url: "https://www.pizzanapoletana.org/struttura/pagine_bicolor/mobile/decalogo_avpn_1.jpg",
+            category: "pizza",
+            id: 2
+        }, {
+            title: "Pizza Napoletana",
+            price: 13,
+            url: "https://www.pizzanapoletana.org/struttura/pagine_bicolor/mobile/decalogo_avpn_1.jpg",
+            category: "pizza",
+            id: 3
+        }, {
+            title: "Greece salad",
+            price: 8,
+            url: "https://assets.epicurious.com/photos/576454fb42e4a5ed66d1df6b/master/pass/greek-salad.jpg",
+            category: "salads",
+            id: 4
+        }, {
+            title: "Cowboy Steak",
+            price: 25,
+            url: "https://i.cbc.ca/1.4491288.1516208229!/fileImage/httpImage/image.jpg_gen/derivatives/16x9_780/cowboysteak.jpg",
+            category: "meat",
+            id: 5
+        } ]
+    };
     function resto_service_typeof(o) {
         "@babel/helpers - typeof";
         return resto_service_typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(o) {
@@ -14738,48 +14769,14 @@
         return ("string" === r ? String : Number)(t);
     }
     var RestoServise = resto_service_createClass(function RestoServise() {
-        var _this = this;
         resto_service_classCallCheck(this, RestoServise);
-        resto_service_defineProperty(this, "_ApiBase", "http://localhost:3000");
-        resto_service_defineProperty(this, "getResource", function() {
-            var _ref = _asyncToGenerator(_regenerator().m(function _callee(url) {
-                var res;
-                return _regenerator().w(function(_context) {
-                    while (1) switch (_context.n) {
-                      case 0:
-                        _context.n = 1;
-                        return fetch(url);
-
-                      case 1:
-                        res = _context.v;
-                        if (res.ok) {
-                            _context.n = 2;
-                            break;
-                        }
-                        throw new Error(" Произошла ошибака - ".concat(res.status, ", в файле: ").concat(url, " "));
-
-                      case 2:
-                        return _context.a(2, res.json());
-                    }
-                }, _callee);
-            }));
-            return function(_x) {
-                return _ref.apply(this, arguments);
-            };
-        }());
-        resto_service_defineProperty(this, "getMenuItems", _asyncToGenerator(_regenerator().m(function _callee2() {
-            var menu;
-            return _regenerator().w(function(_context2) {
-                while (1) switch (_context2.n) {
+        resto_service_defineProperty(this, "getMenuItems", _asyncToGenerator(_regenerator().m(function _callee() {
+            return _regenerator().w(function(_context) {
+                while (1) switch (_context.n) {
                   case 0:
-                    _context2.n = 1;
-                    return _this.getResource("".concat(_this._ApiBase, "/menu/"));
-
-                  case 1:
-                    menu = _context2.v;
-                    return _context2.a(2, menu);
+                    return _context.a(2, db.menu);
                 }
-            }, _callee2);
+            }, _callee);
         })));
     });
     var root = document.querySelector("#root") || document.querySelector(".wrapper");

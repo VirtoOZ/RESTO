@@ -28,9 +28,7 @@ const reducer = (state = initianState, action) => {
 				return arr.find(item => item.id === id);
 			}
 			if (findEl(state.items)) {
-				console.log('yes');
 				const findDubleWithId = findEl(state.items);
-				console.log(findDubleWithId);
 				findDubleWithId.x = findDubleWithId.x + 1;
 				findDubleWithId.key = `${findDubleWithId.title} = x${findDubleWithId.x}`;
 				return {

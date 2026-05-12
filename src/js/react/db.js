@@ -1,4 +1,4 @@
-{
+export default {
 	"menu": [
 		{
 			"title": "Cesar salad",
